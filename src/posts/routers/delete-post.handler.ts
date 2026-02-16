@@ -8,7 +8,7 @@ import {createErrorMessages} from "../../core/middlewares/validation/input-valid
 
 export function deletePostHandler(req: Request, res: Response) {
     const id = req.params.id;
-    const post = postsRepository.getById(Number(id));
+    const post = postsRepository.getById(id);
 
     if (!post) {
         res
@@ -19,6 +19,6 @@ export function deletePostHandler(req: Request, res: Response) {
         return;
     }
 
-    postsRepository.delete(Number(id));
+    postsRepository.delete(id);
     res.sendStatus(HttpStatus.NoContent);
 }

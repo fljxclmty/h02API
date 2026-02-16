@@ -8,7 +8,7 @@ export function updatePostHandler(req: Request, res: Response) {
     const id = Number(req.params.id);
 
 
-    const existingPost = postsRepository.getById(id);
+    const existingPost = postsRepository.getById((id).toString());
 
     if (!existingPost) {
 
@@ -27,7 +27,7 @@ export function updatePostHandler(req: Request, res: Response) {
     };
 
     // 4. Обновляем блог
-    postsRepository.update(id, postData);
+    postsRepository.update((id).toString(), postData);
 
     // 5. Возвращаем 204 No Content (успешное обновление без тела ответа)
     res.sendStatus(HttpStatus.NoContent);

@@ -6,7 +6,7 @@ const posts_repository_1 = require("../repositories/posts.repository");
 const http_statuses_1 = require("../../core/types/http-statuses");
 function updatePostHandler(req, res) {
     const id = Number(req.params.id);
-    const existingPost = posts_repository_1.postsRepository.getById(id);
+    const existingPost = posts_repository_1.postsRepository.getById((id).toString());
     if (!existingPost) {
         return res.status(http_statuses_1.HttpStatus.NotFound).send((0, input_validation_result_middleware_1.createErrorMessages)([{ field: 'id', message: 'Blog does not exist' }]));
     }
@@ -18,7 +18,7 @@ function updatePostHandler(req, res) {
         blogId: req.body.blogId,
     };
     // 4. Обновляем блог
-    posts_repository_1.postsRepository.update(id, postData);
+    posts_repository_1.postsRepository.update((id).toString(), postData);
     // 5. Возвращаем 204 No Content (успешное обновление без тела ответа)
     res.sendStatus(http_statuses_1.HttpStatus.NoContent);
 }

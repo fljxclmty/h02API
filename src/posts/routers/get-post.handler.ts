@@ -7,7 +7,7 @@ import {createErrorMessages} from "../../core/middlewares/validation/input-valid
 
 
 export function getPostHandler(req: Request, res: Response) {
-    const post = postsRepository.getById(Number(req.params.id));
+    const post = postsRepository.getById(req.params.id);
 
     if (!post) {
         res
