@@ -10,7 +10,7 @@ function postPostHandler(req, res) {
         content: req.body.content,
         blogId: req.body.blogId,
         blogName: req.body.blogName,
-        createdAt: (new Date()).toString() };
+    };
     const post = posts_repository_1.postsRepository.create(newPost);
     res.send(post);
 }

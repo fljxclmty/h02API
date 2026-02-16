@@ -14,7 +14,7 @@ export function postPostHandler(req: Request, res: Response) {
         content: req.body.content,
         blogId: req.body.blogId,
         blogName: req.body.blogName,
-        createdAt: (new Date()).toString()}
+        }
 
 
 
