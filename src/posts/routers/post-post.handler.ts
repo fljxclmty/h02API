@@ -1,23 +1,36 @@
-import {Request, Response} from "express";
-import {postsRepository} from "../repositories/posts.repository";
-import {PostEntity} from "../../db/models/PostEntity";
-import {db} from "../../db/in-memory.db";
-
-
-
+import { Request, Response } from "express";
+import { postsRepository } from "../repositories/posts.repository";
+import { PostInputModel } from "../dto/PostInputModel";
+import {HttpStatus} from "../../core/types/http-statuses";
+import { blogsRepository } from "../../blogs/repositories/blogs.repository";
+import {createErrorMessages} from "../../core/middlewares/validation/input-validation-result.middleware";
 
 export function postPostHandler(req: Request, res: Response) {
-
-    const newPost: PostEntity = {id: (db.posts.length ? (+db.posts[db.posts.length - 1].id + 1) : 1).toString(),
+    // 1. Получаем данные из body (PostInputModel)
+    const dto: PostInputModel = {
         title: req.body.title,
         shortDescription: req.body.shortDescription,
         content: req.body.content,
-        blogId: req.body.blogId,
-        blogName: req.body.blogName,
-        }
+        blogId: req.body.blogId  // оставляем как string
+    };
 
+    // 2. Проверяем существование блога (передаем string, не Number)
+    const blog = blogsRepository.getById(Number(dto.blogId));
 
+    if (!blog) {
+        return res.status(HttpStatus.BadRequest).json(
+            createErrorMessages([{
+                field: 'blogId',
+                message: 'Blog not found'
+            }])
+        );
+    }
 
-    const post = postsRepository.create(newPost);
-    res.send(post);
+    // 3. УБИРАЕМ генерацию newId - она не нужна
+
+    // 4. Создаем пост
+    const newPost = postsRepository.create(dto);
+
+    // 5. Возвращаем 201 Created
+    res.status(HttpStatus.Created).json(newPost);
 }

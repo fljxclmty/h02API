@@ -1,7 +1,7 @@
 import {Request, Response} from "express";
 import {BlogEntity} from "../../../db/models/BlogEntity";
 import {db} from "../../../db/in-memory.db";
-
+import {HttpStatus} from "../../../core/types/http-statuses";
 import {blogsRepository} from "../../repositories/blogs.repository";
 
 
@@ -18,7 +18,7 @@ export function postBlogHandler(req: Request, res: Response) {
 
 
     const blog = blogsRepository.create(newBlog);
-    res.send(blog);
+    res.status(HttpStatus.Created).send(blog);
 }
 
 
