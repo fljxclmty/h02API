@@ -13,7 +13,7 @@ export function postBlogHandler(req: Request, res: Response) {
         name: req.body.name,
         description: req.body.description,
         websiteUrl: req.body.websiteUrl,
-        createdAt: (new Date()).toString()}
+        }
 
 
 

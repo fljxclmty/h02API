@@ -8,7 +8,7 @@ function postBlogHandler(req, res) {
         name: req.body.name,
         description: req.body.description,
         websiteUrl: req.body.websiteUrl,
-        createdAt: (new Date()).toString() };
+    };
     const blog = blogs_repository_1.blogsRepository.create(newBlog);
     res.send(blog);
 }
